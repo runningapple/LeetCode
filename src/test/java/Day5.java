@@ -17,20 +17,48 @@ public class Day5 {
             if (prices[i] < min) {
                 min = prices[i];
             }
-            if (prices[i] > min && maxPrice < prices[i] - min) {
+            if (maxPrice < prices[i] - min) {
                 maxPrice = prices[i] - min;
             }
         }
         return maxPrice;
     }
 
+    //还有更好的方法
     public int maxProfit(int[] prices) {
         int maxPrice = 0;
+//        for (int i = 0; i < prices.length; i++) {
+//            int a = getMax(prices, 0, i);
+//            int b = getMax(prices, i + 1, prices.length - 1);
+//            if (a + b > maxPrice) {
+//                maxPrice = a + b;
+//            }
+//        }
+        int[] max_before = new int[prices.length];
+        int[] max_after = new int[prices.length];
+        int min = 1 << 30;
+        int max = 0;
+        int maxPri = 0;
+        int maxPP = 0;
         for (int i = 0; i < prices.length; i++) {
-            int a = getMax(prices, 0, i);
-            int b = getMax(prices, i + 1, prices.length - 1);
-            if (a + b > maxPrice) {
-                maxPrice = a + b;
+            if (min > prices[i]) {
+                min = prices[i];
+            }
+            if (maxPri < prices[i] - min) {
+                maxPri = prices[i] - min;
+            }
+            max_before[i] = maxPri;
+            if (max < prices[prices.length - i - 1]) {
+                max = prices[prices.length - i - 1];
+            }
+            if (maxPP < max - prices[prices.length - i - 1]) {
+                maxPP = max - prices[prices.length - i - 1];
+            }
+            max_after[prices.length - i - 1] = maxPP;
+        }
+        for (int i = 0; i < prices.length; i++) {
+            if (maxPrice < max_before[i] + max_after[i]) {
+                maxPrice = max_before[i] + max_after[i];
             }
         }
         return maxPrice;
@@ -38,7 +66,7 @@ public class Day5 {
 
     @Test
     public void tt() {
-        int[] pr = {2, 1, 4, 5, 2, 9, 7};//[1,2,4,2,5,7,2,4,9,0]
+        int[] pr = {1, 2, 3, 4};//[1,2,4,2,5,7,2,4,9,0]
         System.out.println(maxProfit(pr));
     }
 }
