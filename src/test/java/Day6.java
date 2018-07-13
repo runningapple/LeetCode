@@ -5,10 +5,43 @@
  */
 public class Day6 {
 
+    //80. Remove Duplicates from Sorted Array II
+    public int removeDuplicates(int[] nums) {
+        int len = 2;
+        for (int i = 2; i < nums.length; i++) {
+            if (nums[i] != nums[len-2]) {
+                nums[len++] = nums[i];
+            }
+        }
+        return len;
+    }
+
+    //19. Remove Nth Node From End of List
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        int cnt = 0;
+        ListNode result = new ListNode(0);
+        result.next = head;
+        ListNode node = result.next;
+        while (head != null) {
+            if (cnt > n) {
+                node = node.next;
+            }
+            ++cnt;
+            head = head.next;
+        }
+        if (cnt != n) {
+            node.next = node.next.next;
+        } else {
+            result.next = result.next.next;
+        }
+        return result.next;
+    }
+
     //82. Remove Duplicates from Sorted List II
 
     /**
      * 新增一个头结点，再符合条件的结点放到头结点的下一个结点之后
+     *
      * @param head
      * @return
      */
