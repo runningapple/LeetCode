@@ -6,6 +6,7 @@ package sort;
  * @description: 归并排序数组实现
  */
 public class MergeSort {
+    Double a;
 
     private static void merge(int[] array, int begin, int mid, int end) {
         int[] tmpArray = new int[end - begin + 1];
@@ -42,6 +43,7 @@ public class MergeSort {
         int[] arr = {5, 3, 2};
         sort(arr, 0, 2);
         System.out.println(arr[0] + " " + arr[1] + " " + arr[2]);
+        System.out.println(new MergeSort().a);
     }
 
 }
